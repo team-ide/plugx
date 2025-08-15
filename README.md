@@ -1,2 +1,3 @@
-# go-db-plugin
-golang DB 插件
+# plugX
+
+golang 插件
