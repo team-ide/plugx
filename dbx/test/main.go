@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/team-ide/plugx/dbx"
 	"os"
@@ -22,34 +23,26 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	getInterface, ok := sym.(func() dbx.Plugin)
-	fmt.Println("to getInterface ok:", ok)
-	fmt.Println("to getInterface res:", getInterface)
-	dbPlugin := getInterface()
-
-	conf := `
-{
-"DriverName":"sqlite3",
-"DataSourceName":"./dbx_sqlite.db",
-}
-`
-	openKey, err := dbPlugin.Open(conf)
+	dbPlugin := sym.(func() dbx.Plugin)()
+	conf := map[string]any{
+		"driverName":     "sqlite3",
+		"dataSourceName": "./dbx_sqlite.db",
+	}
+	confB, _ := json.Marshal(conf)
+	db, err := dbPlugin.Open(string(confB))
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(openKey)
-	defer func() { _ = dbPlugin.Close(openKey) }()
+	defer func() { _ = db.Close() }()
 
-	db, err := dbPlugin.GetDB(openKey)
-	if err != nil {
-		panic(err)
-	}
-	err = db.Ping()
-	if err != nil {
+	if err = db.Ping(); err != nil {
 		panic(err)
 	}
 	_, err = db.Exec("create table tb_xxx(id int not null  primary key,name varchar(100) not null)")
 	if err != nil {
+		panic(err)
+	}
+	if _, err = db.Exec("insert into tb_xxx(id,name) values(?,?)", 1, "张三"); err != nil {
 		panic(err)
 	}
 }

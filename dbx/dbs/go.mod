@@ -2,12 +2,10 @@ module dbs
 
 go 1.24.6
 
-replace github.com/team-ide/plugx => ../../
-
 require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/mattn/go-sqlite3 v1.14.32
-	github.com/team-ide/plugx v0.0.0-00010101000000-000000000000
+	github.com/team-ide/plugx v1.0.0
 	modernc.org/sqlite v1.38.2
 )
 
