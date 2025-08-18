@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/team-ide/plugx/dbx"
+	"github.com/team-ide/plugx/databasex"
 	"time"
 )
 
@@ -22,7 +22,7 @@ type Config struct {
 
 type GreeterPlugin struct{}
 
-func (this_ *GreeterPlugin) IsDbPlugin() {}
+func (this_ *GreeterPlugin) IsDatabasePlugin() {}
 
 func (this_ *GreeterPlugin) Open(opts string) (db *sql.DB, err error) {
 	c := &Config{}
@@ -49,6 +49,6 @@ func (this_ *GreeterPlugin) Open(opts string) (db *sql.DB, err error) {
 	return
 }
 
-func GetInterface() dbx.Plugin {
+func GetInterface() databasex.Plugin {
 	return &GreeterPlugin{}
 }

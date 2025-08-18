@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/team-ide/go-driver/db_dm"
 )
 
 func main() {}

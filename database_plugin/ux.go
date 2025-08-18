@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "modernc.org/sqlite"
+	_ "github.com/team-ide/go-driver/db_ux"
 )
 
 func main() {}

@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/team-ide/plugx/dbx"
+	"github.com/team-ide/plugx/databasex"
 	"os"
 	"path"
 	"plugin"
@@ -12,7 +12,7 @@ import (
 func main() {
 	pwd, _ := os.Getwd()
 	fmt.Println("pwd:", pwd)
-	f := path.Join(pwd, "../../plugins/dbx_sqlite.so")
+	f := path.Join(pwd, "../plugins/database_sqlite.so")
 	fmt.Println("plugin:", f)
 	p, err := plugin.Open(f)
 	if err != nil {
@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	dbPlugin := sym.(func() dbx.Plugin)()
+	dbPlugin := sym.(func() databasex.Plugin)()
 	conf := map[string]any{
 		"driverName":     "sqlite3",
 		"dataSourceName": "./dbx_sqlite.db",
